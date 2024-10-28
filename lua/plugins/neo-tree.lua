@@ -22,6 +22,28 @@ return {
 					})
 				end,
 			},
+			{
+				"3rd/image.nvim",
+				config = function()
+					require("image").setup({
+						render = {
+							min_padding = 5,
+							show_label = true,
+							use_dither = true,
+							foreground_color = true,
+							background_color = true,
+							max_width = 80, -- Ajusta el tamaño máximo en ancho
+							max_height = 40, -- Ajusta el tamaño máximo en altura
+						},
+						events = {
+							update_on_nvim_resize = true,
+						},
+						backend = "kitty",
+						integrations = { "neo-tree" },
+						kitty_method = "normal",
+					})
+				end,
+			},
 		},
 		config = function()
 			-- Define los íconos para diagnósticos
