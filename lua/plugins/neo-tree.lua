@@ -32,41 +32,116 @@ return {
 
 			-- Configuración principal de Neo-tree
 			require("neo-tree").setup({
-				-- Activa la barra de pestañas en la parte superior
 				sources = {
 					"filesystem",
 					"buffers",
 					"git_status",
-					"document_symbols", -- Opcional: Agrega "document_symbols" para símbolos
+					"document_symbols",
 				},
 				source_selector = {
-					winbar = true, -- Habilita la barra de pestañas en la parte superior
-					content_layout = "center", -- Centra las pestañas
-					sources = { -- Define el orden de las pestañas aquí
+					winbar = true,
+					content_layout = "center",
+					sources = {
 						{ source = "filesystem", display_name = "File" },
 						{ source = "buffers", display_name = "Buff" },
 						{ source = "git_status", display_name = "Git" },
 						{ source = "document_symbols", display_name = "Symb" },
 					},
-					tabs_layout = "equal", -- Distribuye el ancho de cada pestaña de manera igual
+					tabs_layout = "equal",
+				},
+
+				filesystem = {
+					filtered_items = {
+						visible = false,
+						hide_dotfiles = true,
+						hide_gitignored = true,
+						hide_hidden = true,
+						always_show = { ".env", ".gitignore" },
+						never_show = { ".DS_Store", "thumbs.db" },
+						never_show_by_pattern = { "*.lock", "node_modules" },
+					},
+					follow_current_file = { enabled = true, leave_dirs_open = false },
+					hijack_netrw_behavior = "open_default",
+					bind_to_cwd = true, -- Sincroniza el directorio de trabajo con la raíz del árbol
+					cwd_target = {
+						sidebar = "tab", -- Mantiene el cwd sincronizado en el nivel de pestaña cuando el árbol está en la barra lateral
+						current = "window", -- Sincroniza el cwd en el nivel de ventana cuando el árbol está en el "current"
+					},
+				},
+
+				buffers = {
+					follow_current_file = { enabled = true, leave_dirs_open = false },
+					group_empty_dirs = true,
+					show_unloaded = true,
+				},
+
+				git_status = {
+					window = {
+						position = "left",
+						mappings = {
+							["A"] = "git_add_all",
+							["gu"] = "git_unstage_file",
+							["ga"] = "git_add_file",
+							["gr"] = "git_revert_file",
+							["gc"] = "git_commit",
+							["gp"] = "git_push",
+							["gg"] = "git_commit_and_push",
+						},
+					},
 				},
 
 				document_symbols = {
-					follow_cursor = true, -- Sigue el cursor automáticamente
-					auto_preview = true, -- Activa la vista previa automática
+					follow_cursor = true,
+					auto_preview = true,
 					window = {
 						position = "left",
 						width = 40,
 						mappings = {
-							["."] = "toggle_node", -- Alterna el nodo actual
+							["."] = "toggle_node", -- Mapea el punto para desplegar los símbolos del documento
 						},
 					},
+					kinds = {
+						Class = { icon = "󰌗", hl = "Include" },
+						Function = { icon = "󰊕", hl = "Function" },
+						Variable = { icon = "󰀫", hl = "Constant" },
+						Field = { icon = "󰈾", hl = "Identifier" },
+						Enum = { icon = "󰕘", hl = "Type" },
+						Interface = { icon = "󰜰", hl = "Type" },
+						Module = { icon = "󰏔", hl = "Include" },
+						Constant = { icon = "󰐀", hl = "Constant" },
+					},
 				},
-				close_if_last_window = false,
-				popup_border_style = "rounded",
-				enable_git_status = true,
-				enable_diagnostics = true,
-				open_files_do_not_replace_types = { "terminal", "trouble", "qf" },
+
+				window = {
+					position = "left",
+					width = 40,
+					mappings = {
+						["<space>"] = "",
+						["<2-LeftMouse>"] = "open",
+						["<cr>"] = "open",
+						["P"] = { "toggle_preview", config = { use_float = true, use_image_nvim = true } },
+						["S"] = "open_split",
+						["s"] = "open_vsplit",
+						["t"] = "open_tabnew",
+						["C"] = "close_node",
+						["z"] = "close_all_nodes",
+						["a"] = { "add", config = { show_path = "none" } },
+						["A"] = "add_directory",
+						["d"] = "delete",
+						["r"] = "rename",
+						["y"] = "copy_to_clipboard",
+						["x"] = "cut_to_clipboard",
+						["p"] = "paste_from_clipboard",
+						["c"] = "copy",
+						["m"] = "move",
+						["q"] = "close_window",
+						["R"] = "refresh",
+						["?"] = "show_help",
+						["[g"] = "prev_git_modified", -- Ir al archivo anterior modificado en git
+						["]g"] = "next_git_modified", -- Ir al siguiente archivo modificado en git
+					},
+				},
+
 				default_component_configs = {
 					indent = {
 						indent_size = 2,
@@ -100,61 +175,20 @@ return {
 						},
 					},
 				},
-				window = {
-					position = "left",
-					width = 40,
-					mappings = {
-						["<space>"] = "",
-						["<2-LeftMouse>"] = "open",
-						["<cr>"] = "open",
-						["P"] = { "toggle_preview", config = { use_float = true, use_image_nvim = true } },
-						["S"] = "open_split",
-						["s"] = "open_vsplit",
-						["t"] = "open_tabnew",
-						["C"] = "close_node",
-						["z"] = "close_all_nodes",
-						["a"] = { "add", config = { show_path = "none" } },
-						["A"] = "add_directory",
-						["d"] = "delete",
-						["r"] = "rename",
-						["y"] = "copy_to_clipboard",
-						["x"] = "cut_to_clipboard",
-						["p"] = "paste_from_clipboard",
-						["c"] = "copy",
-						["m"] = "move",
-						["q"] = "close_window",
-						["R"] = "refresh",
-						["?"] = "show_help",
+
+				event_handlers = {
+					{
+						event = "file_opened",
+						handler = function(file_path)
+							-- Cierra Neo-tree al abrir un archivo para optimizar la vista
+							require("neo-tree").close_all()
+						end,
 					},
-				},
-				filesystem = {
-					filtered_items = {
-						visible = false,
-						hide_dotfiles = true,
-						hide_gitignored = true,
-						hide_hidden = true,
-					},
-					follow_current_file = { enabled = false, leave_dirs_open = false },
-					group_empty_dirs = false,
-					hijack_netrw_behavior = "open_default",
-				},
-				buffers = {
-					follow_current_file = { enabled = true, leave_dirs_open = false },
-					group_empty_dirs = true,
-					show_unloaded = true,
-				},
-				git_status = {
-					window = {
-						position = "left",
-						mappings = {
-							["A"] = "git_add_all",
-							["gu"] = "git_unstage_file",
-							["ga"] = "git_add_file",
-							["gr"] = "git_revert_file",
-							["gc"] = "git_commit",
-							["gp"] = "git_push",
-							["gg"] = "git_commit_and_push",
-						},
+					{
+						event = "neo_tree_window_after_open",
+						handler = function(args)
+							print("Neo-tree window opened!")
+						end,
 					},
 				},
 			})
