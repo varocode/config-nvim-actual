@@ -5,6 +5,9 @@ discipline.cowboy()
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
 
+-- lua/config/keymaps.lua
+require("config-plugin.rest_keymaps") -- Carga los keymaps específicos de rest.nvim
+
 -- Do things without affecting the registers
 keymap.set("n", "x", '"_x')
 keymap.set("n", "<Leader>p", '"0p')
