@@ -5,6 +5,37 @@ discipline.cowboy()
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
 
+-- -- Atajo de teclado que define la función directamente
+-- vim.api.nvim_set_keymap(
+-- 	"n",
+-- 	"<leader>np",
+-- 	[[:lua local project_name = vim.fn.input("Project Name: ") if project_name ~= "" then vim.cmd("CreateProject " .. project_name) print("Proyecto '" .. project_name .. "' creado exitosamente.") else print("Creación de proyecto cancelada.") end<CR>]],
+-- 	{ noremap = true, silent = true, desc = "New Project Dialog" }
+-- )
+--
+-- vim.api.nvim_set_keymap(
+-- 	"n",
+-- 	"<leader>na",
+-- 	":NewProject<CR>",
+-- 	{ noremap = true, silent = true, desc = "New Project Dialog" }
+-- )
+--
+-- -- Atajo de teclado para el selector de proyectos
+-- vim.api.nvim_set_keymap(
+-- 	"n",
+-- 	"<leader>nx",
+-- 	":NewProject<CR>",
+-- 	{ noremap = true, silent = true, desc = "Nuevo Proyecto" }
+-- )
+
+-- Atajo de teclado para iniciar el selector de proyectos
+vim.api.nvim_set_keymap(
+	"n",
+	"<leader>np",
+	":NewProject<CR>",
+	{ noremap = true, silent = true, desc = "Crear un nuevo proyecto" }
+)
+
 -- lua/config/keymaps.lua
 require("config-plugin.rest_keymaps") -- Carga los keymaps específicos de rest.nvim
 

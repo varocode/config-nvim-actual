@@ -50,6 +50,14 @@ require("lazy").setup({
 			end,
 		},
 
+		{
+			"nvim-telescope/telescope.nvim",
+			requires = { "nvim-lua/plenary.nvim" },
+			config = function()
+				require("telescope").setup({})
+			end,
+		},
+
 		{ import = "plugins" },
 	},
 	defaults = {
@@ -94,3 +102,19 @@ require("lazy").setup({
 	},
 	debug = false,
 })
+
+---- Cargar script personalizado para crear proyectos
+--require("custom_scripts.project_setup")
+--require("custom_scripts.project_creator")
+--require("custom_scripts.fullstack_project")
+
+-- Cargar el módulo `project_selector` desde `custom_scripts`
+local project_selector = require("custom_scripts.project_selector")
+
+-- -- Crear el comando de Neovim para invocar el selector de proyectos
+-- vim.api.nvim_create_user_command("NewProject", project_selector.project_selector, {})
+--
+-- Llamar al selector de proyectos con Telescope
+vim.api.nvim_create_user_command("NewProject", function()
+	require("custom_scripts.project_selector").project_selector()
+end, {})
