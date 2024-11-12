@@ -36,6 +36,48 @@ vim.api.nvim_set_keymap(
 	{ noremap = true, silent = true, desc = "Crear un nuevo proyecto" }
 )
 
+vim.api.nvim_set_keymap("n", "<leader>dd", ":Dashboard<CR>", { noremap = true, silent = true })
+
+-------------------------------------------------------------------------------
+-- Mapea los atajos de teclado para cada función en modo normal con <leader>h
+vim.api.nvim_set_keymap("n", "<leader>hp", ":Telescope neovim-project<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>hh", ":Telescope project<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>hf", ":Telescope find_files<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>hg", ":Telescope live_grep<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>hr", ":Telescope oldfiles<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>hd", ":NeovimProjectDiscover<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>hl", ":NeovimProjectLoadRecent<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>hh", ":NeovimProjectHistory<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>hs", ":NeovimProjectLoadHist<CR>", { noremap = true, silent = true })
+
+-- Descripciones de los mapeos
+-- <leader>hp - Abre el selector de proyectos con neovim-project
+-- <leader>hh - Cambia entre proyectos configurados con project.nvim
+-- <leader>hf - Abre la búsqueda de archivos en el proyecto actual
+-- <leader>hg - Abre la búsqueda de texto dentro de archivos (live_grep)
+-- <leader>hr - Abre archivos recientes
+-- <leader>hd - Descubre proyectos automáticamente en carpetas configuradas
+-- <leader>hl - Carga la última sesión de proyecto
+-- <leader>hh - Muestra el historial de proyectos recientes
+-- <leader>hs - Carga un proyecto del historial
+
+-- Mapeos dentro de Telescope para eliminar proyectos
+vim.api.nvim_set_keymap(
+	"i",
+	"<C-d>",
+	"lua require('telescope').extensions['neovim-project'].delete_project()<CR>",
+	{ noremap = true, silent = true }
+)
+vim.api.nvim_set_keymap(
+	"n",
+	"<leader>hd",
+	"lua require('telescope').extensions['neovim-project'].delete_project()<CR>",
+	{ noremap = true, silent = true }
+)
+
+vim.api.nvim_set_keymap("n", "<leader>hs", ":enew<CR>", { noremap = true, silent = true })
+
+------------------------------------------------------------------------
 -- lua/config/keymaps.lua
 require("config-plugin.rest_keymaps") -- Carga los keymaps específicos de rest.nvim
 

@@ -56,8 +56,16 @@ return {
 				build = "make",
 			},
 			"nvim-telescope/telescope-file-browser.nvim",
+			"nvim-telescope/telescope-project.nvim", -- Añade telescope-project como dependencia
 		},
 		keys = {
+			{
+				"<leader>fp",
+				function()
+					require("telescope").extensions.project.project() -- Comando para abrir proyectos con telescope-project
+				end,
+				desc = "Open Projects with Telescope",
+			},
 			{
 				"<leader>fP",
 				function()
@@ -208,6 +216,8 @@ return {
 			telescope.setup(opts)
 			require("telescope").load_extension("fzf")
 			require("telescope").load_extension("file_browser")
+			require("telescope").load_extension("neovim-project")
+			require("telescope").load_extension("project")
 		end,
 	},
 }

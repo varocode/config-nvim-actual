@@ -8,9 +8,9 @@ return {
 				-- Columnas para mostrar información adicional
 				columns = {
 					"icon",
-					"permissions",
-					"size",
-					"mtime",
+					-- "permissions",
+					-- "size",
+					-- "mtime",
 				},
 				-- Opciones específicas del buffer
 				buf_options = {
