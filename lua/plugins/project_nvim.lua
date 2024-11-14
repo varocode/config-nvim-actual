@@ -3,7 +3,6 @@ return {
 	opts = {
 		projects = {
 			"~/Projects/*",
-			"~/.config/*",
 		},
 		picker = {
 			type = "telescope",

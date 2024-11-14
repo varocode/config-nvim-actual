@@ -8,7 +8,7 @@ return {
 		provider = "copilot", -- Recommend using Claude
 		auto_suggestions_provider = "copilot", -- Since auto-suggestions are a high-frequency operation and therefore expensive, it is recommended to specify an inexpensive provider or even a free provider: copilot
 		behaviour = {
-			auto_suggestions = true, -- Experimental stage
+			auto_suggestions = false, -- Experimental stage
 			auto_set_highlight_group = true,
 			auto_set_keymaps = true,
 			auto_apply_diff_after_generation = false,

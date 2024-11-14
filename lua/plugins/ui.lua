@@ -238,43 +238,43 @@ return {
 				-- Configuración de los atajos de teclado (botones) en el centro
 				shortcut = {
 					{
-						desc = "📂 Find File ",
+						desc = "📂Find File",
 						key = "f",
 						icon = "",
 						action = "Telescope find_files",
 						group = "@markup.heading.1.markdown",
 					},
 					{
-						desc = "Find Word ",
+						desc = "Find Word",
 						key = "w",
 						icon = " ",
 						action = "Telescope live_grep",
 						group = "@markup.heading.3.markdown",
 					},
 					{
-						desc = "🛠 Update Plugins ",
+						desc = "🛠Update Plugins",
 						key = "u",
 						icon = "",
 						action = "Lazy update",
 						group = "@markup.heading.2.markdown",
 					},
 					{
-						desc = "Install Language ",
+						desc = "Install Language",
 						key = "l",
 						icon = " ",
 						action = "Mason",
 						group = "@markup.heading.2.markdown",
 					},
 					{
-						desc = "Lazy Extras ",
+						desc = "Lazy Extras",
 						key = "L",
-						icon = "🛠 ",
+						icon = "🛠",
 						action = "LazyExtras",
 						group = "@markup.heading.2.markdown",
 					},
 
 					{
-						desc = "🔧 Open Config Folder ",
+						desc = "🔧Open Config Folder",
 						key = "c",
 						icon = "",
 						action = "Telescope find_files cwd=~/.config/nvim",
@@ -288,7 +288,14 @@ return {
 						group = "@markup.heading.1.markdown",
 					},
 					{
-						desc = "Exit ",
+						desc = "Create New Projects",
+						key = "n",
+						icon = "🆕",
+						action = "NewProject",
+						group = "@markup.heading.1.markdown",
+					},
+					{
+						desc = "Exit",
 						key = "q",
 						icon = " ",
 						action = "exit",
