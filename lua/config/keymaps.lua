@@ -1,4 +1,4 @@
-local discipline = require("craftzdog.discipline")
+local discipline = require("varocode.discipline")
 
 discipline.cowboy()
 
@@ -75,7 +75,7 @@ vim.api.nvim_set_keymap(
 	{ noremap = true, silent = true }
 )
 
-vim.api.nvim_set_keymap("n", "<leader>hs", ":enew<CR>", { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap("n", "<leader>hs", ":enew<CR>", { noremap = true, silent = true })
 
 ------------------------------------------------------------------------
 -- lua/config/keymaps.lua
@@ -123,9 +123,6 @@ keymap.set("n", "<s-tab>", ":tabprev<Return>", opts)
 keymap.set("n", "ss", ":split<Return>", opts)
 keymap.set("n", "sv", ":vsplit<Return>", opts)
 
--- Mapeo para abrir una terminal en el directorio del archivo actual
-vim.api.nvim_set_keymap("n", "<leader>ot", ":vsplit | terminal<CR>:lcd %:p:h<CR>", { noremap = true, silent = true })
-
 -- Búsqueda desde la raíz del sistema
 vim.api.nvim_set_keymap(
 	"n",
@@ -160,9 +157,24 @@ keymap.set("n", "<C-j>", function()
 end, opts)
 
 keymap.set("n", "<leader>r", function()
-	require("craftzdog.hsl").replaceHexWithHSL()
+	require("varocode.hsl").replaceHexWithHSL()
 end)
 
 keymap.set("n", "<leader>i", function()
-	require("craftzdog.lsp").toggleInlayHints()
+	require("varocode.lsp").toggleInlayHints()
 end)
+
+----- OBSIDIAN -----
+vim.keymap.set(
+	"n",
+	"<leader>oc",
+	"<cmd>lua require('obsidian').util.toggle_checkbox()<CR>",
+	{ desc = "Obsidian Check Checkbox" }
+)
+vim.keymap.set("n", "<leader>ot", "<cmd>ObsidianTemplate<CR>", { desc = "Insert Obsidian Template" })
+vim.keymap.set("n", "<leader>oo", "<cmd>ObsidianOpen<CR>", { desc = "Open in Obsidian App" })
+vim.keymap.set("n", "<leader>ob", "<cmd>ObsidianBacklinks<CR>", { desc = "Show ObsidianBacklinks" })
+vim.keymap.set("n", "<leader>ol", "<cmd>ObsidianLinks<CR>", { desc = "Show ObsidianLinks" })
+vim.keymap.set("n", "<leader>on", "<cmd>ObsidianNew<CR>", { desc = "Create New Note" })
+vim.keymap.set("n", "<leader>os", "<cmd>ObsidianSearch<CR>", { desc = "Search Obsidian" })
+vim.keymap.set("n", "<leader>oq", "<cmd>ObsidianQuickSwitch<CR>", { desc = "Quick Switch" })

@@ -96,7 +96,7 @@ return {
 			})
 
 			-- Configuración del atajo de teclado para abrir Oil
-			vim.api.nvim_set_keymap("n", "<leader>.", ":Oil<CR>", { noremap = true, silent = true })
+			vim.api.nvim_set_keymap("n", ".", ":Oil<CR>", { noremap = true, silent = true })
 		end,
 	},
 }

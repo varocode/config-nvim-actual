@@ -194,27 +194,27 @@ return {
 				desc = "CopilotChat - Prompt actions",
 			},
 			-- Code related commands
-			{ "<leader>ae", "<cmd>CopilotChatExplain<cr>", desc = "CopilotChat - Explain code" },
-			{ "<leader>at", "<cmd>CopilotChatTests<cr>", desc = "CopilotChat - Generate tests" },
-			{ "<leader>ar", "<cmd>CopilotChatReview<cr>", desc = "CopilotChat - Review code" },
-			{ "<leader>aR", "<cmd>CopilotChatRefactor<cr>", desc = "CopilotChat - Refactor code" },
-			{ "<leader>an", "<cmd>CopilotChatBetterNamings<cr>", desc = "CopilotChat - Better Naming" },
+			{ "<leader>a1", "<cmd>CopilotChatExplain<cr>", desc = "CopilotChat - Explain code" },
+			{ "<leader>a2", "<cmd>CopilotChatTests<cr>", desc = "CopilotChat - Generate tests" },
+			{ "<leader>a3", "<cmd>CopilotChatReview<cr>", desc = "CopilotChat - Review code" },
+			{ "<leader>a4", "<cmd>CopilotChatRefactor<cr>", desc = "CopilotChat - Refactor code" },
+			{ "<leader>a5", "<cmd>CopilotChatBetterNamings<cr>", desc = "CopilotChat - Better Naming" },
 			-- Chat with Copilot in visual mode
 			{
-				"<leader>av",
+				"<leader>a6",
 				":CopilotChatVisual",
 				mode = "x",
 				desc = "CopilotChat - Open in vertical split",
 			},
 			{
-				"<leader>ax",
+				"<leader>a7",
 				":CopilotChatInline<cr>",
 				mode = "x",
 				desc = "CopilotChat - Inline chat",
 			},
 			-- Custom input for CopilotChat
 			{
-				"<leader>ai",
+				"<leader>a8",
 				function()
 					local input = vim.fn.input("Ask Copilot: ")
 					if input ~= "" then
@@ -225,18 +225,18 @@ return {
 			},
 			-- Generate commit message based on the git diff
 			{
-				"<leader>am",
+				"<leader>a9",
 				"<cmd>CopilotChatCommit<cr>",
 				desc = "CopilotChat - Generate commit message for all changes",
 			},
 			{
-				"<leader>aM",
+				"<leader>a0",
 				"<cmd>CopilotChatCommitStaged<cr>",
 				desc = "CopilotChat - Generate commit message for staged changes",
 			},
 			-- Quick chat with Copilot
 			{
-				"<leader>aq",
+				"<leader>a.",
 				function()
 					local input = vim.fn.input("Quick Chat: ")
 					if input ~= "" then
@@ -246,13 +246,13 @@ return {
 				desc = "CopilotChat - Quick chat",
 			},
 			-- Debug
-			{ "<leader>ad", "<cmd>CopilotChatDebugInfo<cr>", desc = "CopilotChat - Debug Info" },
+			{ "<leader>a-", "<cmd>CopilotChatDebugInfo<cr>", desc = "CopilotChat - Debug Info" },
 			-- Fix the issue with diagnostic
-			{ "<leader>af", "<cmd>CopilotChatFixDiagnostic<cr>", desc = "CopilotChat - Fix Diagnostic" },
+			{ "<leader>a=", "<cmd>CopilotChatFixDiagnostic<cr>", desc = "CopilotChat - Fix Diagnostic" },
 			-- Clear buffer and chat history
-			{ "<leader>al", "<cmd>CopilotChatReset<cr>", desc = "CopilotChat - Clear buffer and chat history" },
+			{ "<leader>a`", "<cmd>CopilotChatReset<cr>", desc = "CopilotChat - Clear buffer and chat history" },
 			-- Toggle Copilot Chat Vsplit
-			{ "<leader>av", "<cmd>CopilotChatToggle<cr>", desc = "CopilotChat - Toggle" },
+			{ "<leader>a,", "<cmd>CopilotChatToggle<cr>", desc = "CopilotChat - Toggle" },
 			-- Copilot Chat Models
 			{ "<leader>a?", "<cmd>CopilotChatModels<cr>", desc = "CopilotChat - Select Models" },
 		},

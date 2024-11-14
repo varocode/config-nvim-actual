@@ -1,102 +1,212 @@
--- ~/.config/nvim/lua/plugins/dap.lua
+-- This file contains the configuration for the nvim-dap plugin in Neovim.
 
 return {
-	-- Plugin principal de depuración
 	{
+		-- Plugin: nvim-dap
+		-- URL: https://github.com/mfussenegger/nvim-dap
+		-- Description: Debug Adapter Protocol client implementation for Neovim.
 		"mfussenegger/nvim-dap",
+		recommended = true, -- Recommended plugin
+		desc = "Debugging support. Requires language specific adapters to be configured. (see lang extras)",
+
 		dependencies = {
-			-- UI para la depuración
+			-- Plugin: nvim-dap-ui
+			-- URL: https://github.com/rcarriga/nvim-dap-ui
+			-- Description: A UI for nvim-dap.
 			"rcarriga/nvim-dap-ui",
-			-- Texto virtual en el código durante la depuración
+
+			-- Plugin: nvim-dap-virtual-text
+			-- URL: https://github.com/theHamsta/nvim-dap-virtual-text
+			-- Description: Virtual text for the debugger.
 			{
 				"theHamsta/nvim-dap-virtual-text",
-				opts = {}, -- Opciones personalizables
+				opts = {}, -- Default options
 			},
-			-- Gestión automática de adaptadores de depuración con mason.nvim
-			"jay-babu/mason-nvim-dap.nvim",
-			-- Mason.nvim para manejar la instalación de adaptadores
-			"williamboman/mason.nvim",
 		},
+
+		-- Keybindings for nvim-dap
+		keys = {
+			{ "<leader>d", "", desc = "+debug", mode = { "n", "v" } }, -- Group for debug commands
+			{
+				"<leader>dB",
+				function()
+					require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))
+				end,
+				desc = "Breakpoint Condition",
+			},
+			{
+				"<leader>db",
+				function()
+					require("dap").toggle_breakpoint()
+				end,
+				desc = "Toggle Breakpoint",
+			},
+			{
+				"<leader>dc",
+				function()
+					require("dap").continue()
+				end,
+				desc = "Continue",
+			},
+			{
+				"<leader>da",
+				function()
+					require("dap").continue({ before = get_args })
+				end,
+				desc = "Run with Args",
+			},
+			{
+				"<leader>dC",
+				function()
+					require("dap").run_to_cursor()
+				end,
+				desc = "Run to Cursor",
+			},
+			{
+				"<leader>dg",
+				function()
+					require("dap").goto_()
+				end,
+				desc = "Go to Line (No Execute)",
+			},
+			{
+				"<leader>di",
+				function()
+					require("dap").step_into()
+				end,
+				desc = "Step Into",
+			},
+			{
+				"<leader>dj",
+				function()
+					require("dap").down()
+				end,
+				desc = "Down",
+			},
+			{
+				"<leader>dk",
+				function()
+					require("dap").up()
+				end,
+				desc = "Up",
+			},
+			{
+				"<leader>dl",
+				function()
+					require("dap").run_last()
+				end,
+				desc = "Run Last",
+			},
+			{
+				"<leader>do",
+				function()
+					require("dap").step_out()
+				end,
+				desc = "Step Out",
+			},
+			{
+				"<leader>dO",
+				function()
+					require("dap").step_over()
+				end,
+				desc = "Step Over",
+			},
+			{
+				"<leader>dp",
+				function()
+					require("dap").pause()
+				end,
+				desc = "Pause",
+			},
+			{
+				"<leader>dr",
+				function()
+					require("dap").repl.toggle()
+				end,
+				desc = "Toggle REPL",
+			},
+			{
+				"<leader>ds",
+				function()
+					require("dap").session()
+				end,
+				desc = "Session",
+			},
+			{
+				"<leader>dt",
+				function()
+					require("dap").terminate()
+				end,
+				desc = "Terminate",
+			},
+			{
+				"<leader>dw",
+				function()
+					require("dap.ui.widgets").hover()
+				end,
+				desc = "Widgets",
+			},
+		},
+
 		config = function()
-			-- Configuración de DAP
 			local dap = require("dap")
-			local dapui = require("dapui")
-			local mason_dap = require("mason-nvim-dap")
 
-			-- Configuración de dap-ui (interfaz gráfica)
-			dapui.setup()
-
-			-- Configuración de nvim-dap-virtual-text (texto virtual en el código durante la depuración)
-			require("nvim-dap-virtual-text").setup({}) -- Solucionar advertencia, se pasa un objeto vacío como argumento
-
-			-- Integración con mason-nvim-dap para instalar automáticamente adaptadores
-			mason_dap.setup({
-				-- Instalación automática de adaptadores
-				automatic_installation = true,
-				-- Asegúrate de que estos adaptadores estén instalados
-				ensure_installed = { "js-debug-adapter", "node2" },
-			})
-
-			-- Abrir/cerrar UI cuando se inicie/termine la depuración
-			dap.listeners.after.event_initialized["dapui_config"] = function()
-				dapui.open()
-			end
-			dap.listeners.before.event_terminated["dapui_config"] = function()
-				dapui.close()
-			end
-			dap.listeners.before.event_exited["dapui_config"] = function()
-				dapui.close()
+			-- Load mason-nvim-dap if available
+			if LazyVim.has("mason-nvim-dap.nvim") then
+				require("mason-nvim-dap").setup(LazyVim.opts("mason-nvim-dap.nvim"))
 			end
 
-			-- Definir signos visuales para breakpoints
-			for name, sign in pairs(require("lazyvim.config").icons.dap) do
-				local hl = sign[2] or "DiagnosticInfo"
-				vim.fn.sign_define("Dap" .. name, { text = sign[1], texthl = hl, linehl = sign[3], numhl = sign[3] })
+			-- Set highlight for DapStoppedLine
+			vim.api.nvim_set_hl(0, "DapStoppedLine", { default = true, link = "Visual" })
+
+			-- Define signs for DAP
+			for name, sign in pairs(LazyVim.config.icons.dap) do
+				sign = type(sign) == "table" and sign or { sign }
+				vim.fn.sign_define(
+					"Dap" .. name,
+					{ text = sign[1], texthl = sign[2] or "DiagnosticInfo", linehl = sign[3], numhl = sign[3] }
+				)
 			end
 
-			-- Leer configuraciones de depuración desde launch.json de VSCode
+			-- Setup DAP configuration using VsCode launch.json file
 			local vscode = require("dap.ext.vscode")
 			local json = require("plenary.json")
-			-- Esta línea fue comentada para evitar la advertencia de campo duplicado
-			-- vscode.json_decode = function(str)
-			--   return vim.json.decode(json.json_strip_comments(str))
-			-- end
+			vscode.json_decode = function(str)
+				return vim.json.decode(json.json_strip_comments(str))
+			end
 
+			-- Load launch configurations from .vscode/launch.json if it exists
 			if vim.fn.filereadable(".vscode/launch.json") then
 				vscode.load_launchjs()
 			end
 
-			-- Mapear teclas de depuración
-			vim.keymap.set("n", "<leader>db", function()
-				dap.toggle_breakpoint()
-			end, { desc = "Toggle Breakpoint" })
-			vim.keymap.set("n", "<leader>dc", function()
-				dap.continue()
-			end, { desc = "Continue" })
-			vim.keymap.set("n", "<leader>di", function()
-				dap.step_into()
-			end, { desc = "Step Into" })
-			vim.keymap.set("n", "<leader>do", function()
-				dap.step_over()
-			end, { desc = "Step Over" })
-			vim.keymap.set("n", "<leader>dO", function()
-				dap.step_out()
-			end, { desc = "Step Out" })
-			vim.keymap.set("n", "<leader>dr", function()
-				dap.repl.toggle()
-			end, { desc = "Toggle REPL" })
-			vim.keymap.set("n", "<leader>ds", function()
-				dap.session()
-			end, { desc = "Session" })
-			vim.keymap.set("n", "<leader>dt", function()
-				dap.terminate()
-			end, { desc = "Terminate" })
-			vim.keymap.set("n", "<leader>dw", function()
-				require("dap.ui.widgets").hover()
-			end, { desc = "Widgets" })
-			vim.keymap.set("n", "<leader>du", function()
-				dapui.toggle()
-			end, { desc = "Toggle DAP UI" })
+			-- Function to load environment variables
+			local function load_env_variables()
+				local variables = {}
+				for k, v in pairs(vim.fn.environ()) do
+					variables[k] = v
+				end
+
+				-- Load variables from .env file manually
+				local env_file_path = vim.fn.getcwd() .. "/.env"
+				local env_file = io.open(env_file_path, "r")
+				if env_file then
+					for line in env_file:lines() do
+						for key, value in string.gmatch(line, "([%w_]+)=([%w_]+)") do
+							variables[key] = value
+						end
+					end
+					env_file:close()
+				else
+					print("Error: .env file not found in " .. env_file_path)
+				end
+				return variables
+			end
+
+			-- Add the env property to each existing Go configuration
+			for _, config in pairs(dap.configurations.go or {}) do
+				config.env = load_env_variables
+			end
 		end,
 	},
 }

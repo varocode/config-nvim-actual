@@ -148,6 +148,7 @@ return {
 				gitsigns = true,
 				tmux = true,
 				kitty = { enabled = false, font = "+2" },
+				twilight = { enabled = true }, -- Enable twilight integration
 			},
 		},
 		keys = { { "<leader>z", "<cmd>ZenMode<cr>", desc = "Zen Mode" } },
@@ -219,7 +220,9 @@ return {
 			theme = "hyper",
 			config = {
 				-- Configuración del encabezado con ASCII art
+
 				header = {
+					"                                                                                 ",
 					"        ██╗   ██╗ █████╗ ██████╗  ██████╗        ██████╗ ██████╗ ██████╗ ███████╗",
 					"        ██║   ██║██╔══██╗██╔══██╗██╔═══██╗      ██╔════╝██╔═══██╗██╔══██╗██╔════╝",
 					"        ██║   ██║███████║██████╔╝██║   ██║█████╗██║     ██║   ██║██║  ██║█████╗  ",
@@ -227,17 +230,9 @@ return {
 					"         ╚████╔╝ ██║  ██║██║  ██║╚██████╔╝      ╚██████╗╚██████╔╝██████╔╝███████╗",
 					"          ╚═══╝  ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝        ╚═════╝ ╚═════╝ ╚══════╝ ╚══════╝",
 					"",
-					"        ,---,---,---,---,---,---,---,---,---,---,---,---,---,-------,",
-					"        | ~ | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 0 | [ | ] | <-    |",
-					"        |---'-,-'-,-'-,-'-,-'-,-'-,-'-,-'-,-'-,-'-,-'-,-'-,-'-,-----|",
-					'        | ->| | " | , | . | P | Y | F | G | C | R | L | / | = |  \\  |',
-					"        |-----',--',--',--',--',--',--',--',--',--',--',--',--'-----|",
-					"        | Caps | A | O | E | U | I | D | H | T | N | S | - |  Enter |",
-					"        |------'-,-'-,-'-,-'-,-'-,-'-,-'-,-'-,-'-,-'-,-'-,-'--------|",
-					"        |        | ; | Q | J | K | X | B | M | W | V | Z |          |",
-					"        |------,-',--'--,'---'---'---'---'---'---'-,-'---',--,------|",
-					"        | ctrl |  | alt |                          | alt  |  | ctrl |",
-					"        '------'  '-----'--------------------------'------'  '------'",
+					"「成長は毎日の小さな努力の積み重ねです」", -- Frase en japonés
+					"El crecimiento es la acumulación de pequeños esfuerzos diarios",
+					"                                                               ",
 				},
 
 				-- Configuración de los atajos de teclado (botones) en el centro
@@ -245,12 +240,12 @@ return {
 					{
 						desc = "📂 Find File ",
 						key = "f",
-						icon = " ",
+						icon = "",
 						action = "Telescope find_files",
 						group = "@markup.heading.1.markdown",
 					},
 					{
-						desc = "🔍 Find Word ",
+						desc = "Find Word ",
 						key = "w",
 						icon = " ",
 						action = "Telescope live_grep",
@@ -259,7 +254,7 @@ return {
 					{
 						desc = "🛠 Update Plugins ",
 						key = "u",
-						icon = " ",
+						icon = "",
 						action = "Lazy update",
 						group = "@markup.heading.2.markdown",
 					},
@@ -271,21 +266,29 @@ return {
 						group = "@markup.heading.2.markdown",
 					},
 					{
+						desc = "Lazy Extras ",
+						key = "L",
+						icon = "🛠 ",
+						action = "LazyExtras",
+						group = "@markup.heading.2.markdown",
+					},
+
+					{
 						desc = "🔧 Open Config Folder ",
 						key = "c",
-						icon = " ",
+						icon = "",
 						action = "Telescope find_files cwd=~/.config/nvim",
 						group = "@markup.heading.2.markdown",
 					},
 					{
-						desc = " Open Projects",
+						desc = "Open Projects",
 						key = "p",
 						icon = " ",
 						action = "NeovimProjectDiscover", -- Asegúrate de que este comando exista y funcione en el plugin neovim-project
 						group = "@markup.heading.1.markdown",
 					},
 					{
-						desc = "❌ Exit ",
+						desc = "Exit ",
 						key = "q",
 						icon = " ",
 						action = "exit",
@@ -302,9 +305,11 @@ return {
 				-- Configuración del pie de página
 				footer = {
 					"",
-					"🚀 Neovim, Configuración Personalizada",
-					"🌐 GitHub: https://github.com/varocode",
-					"⚙️ Version: " .. vim.version().major .. "." .. vim.version().minor,
+					"🌐  GitHub: https://github.com/varocode",
+					"🔍  Version de Neovim: " .. vim.version().major .. "." .. vim.version().minor,
+					"                  💖                    ",
+					"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+					"    Disfruta cada línea de código! ✨   ",
 				},
 
 				-- Opciones adicionales
