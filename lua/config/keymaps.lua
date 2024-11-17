@@ -95,6 +95,30 @@ keymap.set("n", "<Leader>D", '"_D')
 keymap.set("v", "<Leader>d", '"_d')
 keymap.set("v", "<Leader>D", '"_D')
 
+-- Buscar caracteres en todo el buffer y resaltar coincidencias en tiempo real
+keymap.set("n", "f", function()
+	local char = ""
+	vim.cmd("set hlsearch")
+	while true do
+		local new_char = vim.fn.getcharstr()
+		if new_char == "\r" then
+			break
+		elseif new_char == "\b" then
+			char = char:sub(1, -2)
+		else
+			char = char .. new_char
+		end
+		vim.cmd("let @/ = '" .. char .. "'")
+		vim.cmd("redraw")
+	end
+	if vim.fn.search(char) == 0 then
+		print("Pattern not found: " .. char)
+	else
+		vim.cmd("normal! n")
+	end
+end, { noremap = true, silent = true, desc = "Buscar caracteres en todo el buffer" })
+
+------------------------------------------------------
 -- Increment/decrement
 -- keymap.set("n", "+", "<C-a>")
 -- keymap.set("n", "-", "<C-x>")

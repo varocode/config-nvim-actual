@@ -2,7 +2,7 @@ return {
 	"yetone/avante.nvim",
 	event = "VeryLazy",
 	lazy = false,
-	version = false, -- set this if you want to always pull the latest change
+	version = "0.0.9", -- set this if you want to always pull the latest change
 	opts = {
 		---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
 		provider = "copilot", -- Recommend using Claude
@@ -101,7 +101,7 @@ return {
 		"nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
 		{
 			"github/copilot.vim",
-			enabled = false,
+			enabled = true,
 		},
 		{
 			-- support for image pasting
