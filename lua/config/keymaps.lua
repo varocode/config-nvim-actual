@@ -96,8 +96,8 @@ keymap.set("v", "<Leader>d", '"_d')
 keymap.set("v", "<Leader>D", '"_D')
 
 -- Increment/decrement
-keymap.set("n", "+", "<C-a>")
-keymap.set("n", "-", "<C-x>")
+-- keymap.set("n", "+", "<C-a>")
+-- keymap.set("n", "-", "<C-x>")
 
 -- Delete a word backwards
 keymap.set("n", "dw", 'vb"_d')
@@ -123,22 +123,6 @@ keymap.set("n", "<s-tab>", ":tabprev<Return>", opts)
 keymap.set("n", "ss", ":split<Return>", opts)
 keymap.set("n", "sv", ":vsplit<Return>", opts)
 
--- Búsqueda desde la raíz del sistema
-vim.api.nvim_set_keymap(
-	"n",
-	"<Space>fs",
-	":lua require('telescope.builtin').find_files({ prompt_title = '< Buscar desde Raíz del Sistema >', cwd = '/', hidden = true })<CR>",
-	{ noremap = true, silent = true }
-)
-
--- Búsqueda desde el directorio home
-vim.api.nvim_set_keymap(
-	"n",
-	"<Space>fh",
-	":lua require('telescope.builtin').find_files({ prompt_title = '< Buscar desde Home >', cwd = vim.fn.expand('~'), hidden = true })<CR>",
-	{ noremap = true, silent = true }
-)
-
 -- Move window
 keymap.set("n", "sh", "<C-w>h")
 keymap.set("n", "sk", "<C-w>k")
@@ -152,7 +136,7 @@ keymap.set("n", "<C-w><up>", "<C-w>+")
 keymap.set("n", "<C-w><down>", "<C-w>-")
 
 -- Diagnostics
-keymap.set("n", "<C-j>", function()
+keymap.set("n", "<C-,>", function()
 	vim.diagnostic.goto_next()
 end, opts)
 
@@ -178,3 +162,22 @@ vim.keymap.set("n", "<leader>ol", "<cmd>ObsidianLinks<CR>", { desc = "Show Obsid
 vim.keymap.set("n", "<leader>on", "<cmd>ObsidianNew<CR>", { desc = "Create New Note" })
 vim.keymap.set("n", "<leader>os", "<cmd>ObsidianSearch<CR>", { desc = "Search Obsidian" })
 vim.keymap.set("n", "<leader>oq", "<cmd>ObsidianQuickSwitch<CR>", { desc = "Quick Switch" })
+
+-- Map Ctrl+b in insert mode to delete to the end of the word without leaving insert mode
+vim.keymap.set("i", "<C-[>", "<C-o>de")
+
+-- Map Ctrl+c to escape from other modes
+vim.keymap.set({ "i", "n", "v" }, "<C-c>", [[<C-\><C-n>]])
+
+----- Tmux Navigation ------
+local nvim_tmux_nav = require("nvim-tmux-navigation")
+
+vim.keymap.set("n", "<C-h>", nvim_tmux_nav.NvimTmuxNavigateLeft) -- Navigate to the left pane
+vim.keymap.set("n", "<C-j>", nvim_tmux_nav.NvimTmuxNavigateDown) -- Navigate to the bottom pane
+vim.keymap.set("n", "<C-k>", nvim_tmux_nav.NvimTmuxNavigateUp) -- Navigate to the top pane
+vim.keymap.set("n", "<C-l>", nvim_tmux_nav.NvimTmuxNavigateRight) -- Navigate to the right pane
+vim.keymap.set("n", "<C-\\>", nvim_tmux_nav.NvimTmuxNavigateLastActive) -- Navigate to the last active pane
+vim.keymap.set("n", "<C-;>", nvim_tmux_nav.NvimTmuxNavigateNext) -- Navigate to the next pane
+
+-- Configuración del atajo de teclado para abrir Oil
+vim.api.nvim_set_keymap("n", "-", ":Oil<CR>", { noremap = true, silent = true })

@@ -94,6 +94,10 @@ app.listen(PORT, () => {
 			print("Error: El servidor en el puerto " .. srv.port .. " no pudo iniciar.")
 		end
 	end
+
+	-- Abrir el proyecto en una nueva instancia de Neovim usando Alacritty
+	local nvim_cmd = "alacritty -e nvim " .. project_path
+	vim.fn.jobstart(nvim_cmd, { detach = true })
 end
 
 return { create = create }
