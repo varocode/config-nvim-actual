@@ -18,7 +18,7 @@ require("lazy").setup({
 			"LazyVim/LazyVim",
 			import = "lazyvim.plugins",
 			opts = {
-				colorscheme = "solarized-osaka",
+				colorscheme = "kanagawa-dragon",
 				news = {
 					lazyvim = true,
 					neovim = true,
@@ -42,21 +42,22 @@ require("lazy").setup({
 		{ import = "lazyvim.plugins.extras.coding.yanky" },
 		{ import = "lazyvim.plugins.extras.editor.mini-files" },
 		-- { import = "lazyvim.plugins.extras.util.project" },
-		{
-			"ibhagwan/fzf-lua", -- Plugin fzf-lua
-			requires = { "nvim-lua/plenary.nvim" }, -- Dependencia necesaria para fzf-lua
-			config = function()
-				require("fzf-lua").setup() -- Configura fzf-lua (opcional)
-			end,
-		},
 
-		{
-			"nvim-telescope/telescope.nvim",
-			requires = { "nvim-lua/plenary.nvim" },
-			config = function()
-				require("telescope").setup({})
-			end,
-		},
+		-- {
+		-- 	"ibhagwan/fzf-lua", -- Plugin fzf-lua
+		-- 	requires = { "nvim-lua/plenary.nvim" }, -- Dependencia necesaria para fzf-lua
+		-- 	config = function()
+		-- 		require("fzf-lua").setup() -- Configura fzf-lua (opcional)
+		-- 	end,
+		-- },
+
+		-- {
+		-- 	"nvim-telescope/telescope.nvim",
+		-- 	requires = { "nvim-lua/plenary.nvim" },
+		-- 	config = function()
+		-- 		require("telescope").setup({})
+		-- 	end,
+		-- },
 
 		{ import = "plugins" },
 	},

@@ -123,12 +123,12 @@ return {
 		lazy = false, -- Load this plugin immediately
 		priority = 1000, -- High priority to ensure it loads early
 	},
-	{
-		-- LazyVim configuration
-		"LazyVim/LazyVim",
-		opts = {
-			-- Set the default color scheme
-			colorscheme = "kanagawa-dragon",
-		},
-	},
+	-- {
+	-- 	-- LazyVim configuration
+	-- 	"LazyVim/LazyVim",
+	-- 	opts = {
+	-- 		-- Set the default color scheme
+	-- 		colorscheme = "kanagawa-dragon",
+	-- 	},
+	-- },
 }

@@ -9,10 +9,11 @@
     "lazyvim.plugins.extras.lang.python",
     "lazyvim.plugins.extras.lang.sql",
     "lazyvim.plugins.extras.lang.svelte",
-    "lazyvim.plugins.extras.lang.vue"
+    "lazyvim.plugins.extras.lang.vue",
+    "lazyvim.plugins.extras.ui.dashboard-nvim"
   ],
   "news": {
-    "NEWS.md": "7107",
+    "NEWS.md": "7429",
     "doc/news.txt": "24450"
   },
   "version": 7

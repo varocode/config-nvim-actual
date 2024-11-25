@@ -18,7 +18,7 @@ return {
 		-- Define workspaces for Obsidian
 		workspaces = {
 			{
-				name = "GentlemanNotes", -- Name of the workspace
+				name = "VaroCodeNotes", -- Name of the workspace
 				path = "/home/varodev/obsidian-notes/", -- Path to the notes directory
 			},
 		},

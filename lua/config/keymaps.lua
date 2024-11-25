@@ -118,6 +118,14 @@ keymap.set("n", "f", function()
 	end
 end, { noremap = true, silent = true, desc = "Buscar caracteres en todo el buffer" })
 
+-- abrir una terminal en la parte inferior
+vim.api.nvim_set_keymap(
+	"n",
+	"<leader>rt",
+	":split | terminal<CR>",
+	{ noremap = true, silent = true, desc = "Abrir terminal en la parte inferior" }
+)
+
 ------------------------------------------------------
 -- Increment/decrement
 -- keymap.set("n", "+", "<C-a>")
